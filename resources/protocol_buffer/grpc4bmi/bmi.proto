@@ -1,0 +1,234 @@
+syntax = "proto3";
+
+package bmi;
+
+message Empty{}
+
+message InitializeRequest
+{
+    string config_file = 1;
+}
+
+message UpdateUntilRequest
+{
+    double until = 1;
+}
+
+message UpdateFracRequest
+{
+    double frac = 1;
+}
+
+message GetComponentNameResponse
+{
+    string name = 1;
+}
+
+message GetVarNamesResponse
+{
+    repeated string names = 1;
+}
+
+message GetTimeUnitsResponse
+{
+    string units = 1;
+}
+
+message GetTimeStepResponse
+{
+    double interval = 1;
+}
+
+message GetTimeResponse
+{
+    double time = 1;
+}
+
+message GetVarRequest
+{
+    string name = 1;
+}
+
+message GetVarGridResponse
+{
+    int32 grid_id = 1;
+}
+
+message GetVarTypeResponse
+{
+    string type = 1;
+}
+
+message GetVarItemSizeResponse
+{
+    int64 size = 1;
+}
+
+message GetVarUnitsResponse
+{
+    string units = 1;
+}
+
+message GetVarNBytesResponse
+{
+    int64 nbytes = 1;
+}
+
+message IntArrayMessage
+{
+    repeated int64 values = 1 [packed = true];
+}
+
+message FloatArrayMessage
+{
+    repeated float values = 1 [packed = true];
+}
+
+message DoubleArrayMessage
+{
+    repeated double values = 1 [packed = true];
+}
+
+message GetValueResponse
+{
+    oneof values {
+        IntArrayMessage values_int = 1;
+        FloatArrayMessage values_float = 2;
+        DoubleArrayMessage values_double = 3;
+    }
+}
+
+message GetValueAtIndicesRequest
+{
+    string name = 1;
+    repeated int64 indices = 2 [packed = true];
+}
+
+message GetValueAtIndicesResponse
+{
+    oneof values {
+        IntArrayMessage values_int = 1;
+        FloatArrayMessage values_float = 2;
+        DoubleArrayMessage values_double = 3;
+    }
+}
+
+message SetValueRequest
+{
+    string name = 1;
+    oneof values {
+        IntArrayMessage values_int = 2;
+        FloatArrayMessage values_float = 3;
+        DoubleArrayMessage values_double = 4;
+    }
+}
+
+message SetValuePtrRequest
+{
+    string name = 1;
+    int64 ref = 2;
+}
+
+message SetValueAtIndicesRequest
+{
+    string name = 1;
+    repeated int64 indices = 2 [packed = true];
+    oneof values {
+        IntArrayMessage values_int = 3;
+        FloatArrayMessage values_float = 4;
+        DoubleArrayMessage values_double = 5;
+    }
+}
+
+message GridRequest
+{
+    int64 grid_id = 1;
+}
+
+message GetGridSizeResponse
+{
+    int64 size = 1;
+}
+
+message GetGridRankResponse
+{
+    int64 rank = 1;
+}
+
+message GetGridTypeResponse
+{
+    string type = 1;
+}
+
+message GetGridShapeResponse
+{
+    repeated int64 shape = 1 [packed = true];
+}
+
+message GetGridSpacingResponse
+{
+    repeated double spacing = 1 [packed = true];
+}
+
+message GetGridOriginResponse
+{
+    repeated double origin = 1 [packed = true];
+}
+
+message GetGridPointsResponse
+{
+    repeated double coordinates = 1 [packed = true];
+}
+
+message GetGridConnectivityResponse
+{
+    repeated int64 links = 1 [packed = true];
+}
+
+message GetGridOffsetResponse
+{
+    repeated int64 offsets = 1 [packed = true];
+}
+
+service BmiService {
+
+    rpc initialize(InitializeRequest) returns(Empty) {}
+    rpc update(Empty) returns(Empty) {}
+    rpc updateUntil(UpdateUntilRequest) returns(Empty) {}
+    rpc updateFrac(UpdateFracRequest) returns(Empty) {}
+    rpc finalize(Empty) returns(Empty) {}
+
+    rpc getComponentName(Empty) returns(GetComponentNameResponse) {}
+    rpc getInputVarNames(Empty) returns(GetVarNamesResponse) {}
+    rpc getOutputVarNames(Empty) returns(GetVarNamesResponse) {}
+
+    rpc getTimeUnits(Empty) returns(GetTimeUnitsResponse) {}
+    rpc getTimeStep(Empty) returns(GetTimeStepResponse) {}
+    rpc getCurrentTime(Empty) returns(GetTimeResponse) {}
+    rpc getStartTime(Empty) returns(GetTimeResponse) {}
+    rpc getEndTime(Empty) returns(GetTimeResponse) {}
+
+    rpc getVarGrid(GetVarRequest) returns(GetVarGridResponse) {}
+    rpc getVarType(GetVarRequest) returns(GetVarTypeResponse) {}
+    rpc getVarItemSize(GetVarRequest) returns(GetVarItemSizeResponse) {}
+    rpc getVarUnits(GetVarRequest) returns(GetVarUnitsResponse) {}
+    rpc getVarNBytes(GetVarRequest) returns(GetVarNBytesResponse) {}
+
+    rpc getValue(GetVarRequest) returns(GetValueResponse) {}
+    rpc getValueAtIndices(GetValueAtIndicesRequest) returns(GetValueAtIndicesResponse) {}
+
+    rpc setValue(SetValueRequest) returns(Empty) {}
+    rpc setValueAtIndices(SetValueAtIndicesRequest) returns(Empty) {}
+
+    rpc getGridSize(GridRequest) returns(GetGridSizeResponse) {}
+    rpc getGridType(GridRequest) returns(GetGridTypeResponse) {}
+    rpc getGridRank(GridRequest) returns(GetGridRankResponse) {}
+    rpc getGridShape(GridRequest) returns(GetGridShapeResponse) {}
+    rpc getGridSpacing(GridRequest) returns(GetGridSpacingResponse) {}
+    rpc getGridOrigin(GridRequest) returns(GetGridOriginResponse) {}
+    rpc getGridX(GridRequest) returns(GetGridPointsResponse) {}
+    rpc getGridY(GridRequest) returns(GetGridPointsResponse) {}
+    rpc getGridZ(GridRequest) returns(GetGridPointsResponse) {}
+    rpc getGridConnectivity(GridRequest) returns(GetGridConnectivityResponse) {}
+    rpc getGridOffset(GridRequest) returns(GetGridOffsetResponse) {}
+}
