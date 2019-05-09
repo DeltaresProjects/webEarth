@@ -1,6 +1,6 @@
 # cpp include fortran
 
-## [Link](https://wiki.calculquebec.ca/w/C%2B%2B_:_appels_Fortran/en)
+## [Example](https://wiki.calculquebec.ca/w/C%2B%2B_:_appels_Fortran/en)
 
 ```bash
 [name@server $] gfortran sum.f90 -c -o sum.o
@@ -8,7 +8,7 @@
 [name@server $] ./a.out
 ```
 
-## grpc4bmi
+## [grpc4bmi](https://grpc4bmi.readthedocs.io/en/latest/server/Cpp.html#fortran)
 
 Fortran
 In case you have a Fortran model, we advice to write the corresponding functions in Fortran first and export them to the implementation, e.g.
